@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+# App logs and screenshots
+app_logs/
+app_screesnhots/
