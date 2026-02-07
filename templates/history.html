@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}History — Net Worth Calculator{% endblock %}
+
+{% block content %}
+<h1>Calculation History</h1>
+<p class="subtitle">Your past net worth calculations.</p>
+
+{% if calculations %}
+<div class="history-table-wrapper">
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Assets</th>
+                <th>Total Liabilities</th>
+                <th>Net Worth</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calc in calculations %}
+            <tr>
+                <td>{{ calc.created_at.strftime('%b %d, %Y %I:%M %p') }}</td>
+                <td class="positive">${{ "{:,.2f}".format(calc.total_assets) }}</td>
+                <td class="negative">${{ "{:,.2f}".format(calc.total_liabilities) }}</td>
+                <td class="{{ 'positive' if calc.net_worth >= 0 else 'negative' }}">
+                    ${{ "{:,.2f}".format(calc.net_worth) }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No calculations yet. <a href="/">Calculate your net worth</a> to get started.</p>
+</div>
+{% endif %}
+{% endblock %}

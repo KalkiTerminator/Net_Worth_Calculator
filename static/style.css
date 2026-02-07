@@ -9,12 +9,62 @@ body {
     background: #f0f2f5;
     color: #1a1a2e;
     min-height: 100vh;
-    padding: 2rem 1rem;
 }
+
+/* --- Nav bar --- */
+
+.navbar {
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.nav-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #6366f1;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-links a {
+    color: #444;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #6366f1;
+}
+
+.nav-user {
+    font-size: 0.9rem;
+    color: #6366f1;
+    font-weight: 600;
+}
+
+/* --- Container --- */
 
 .container {
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 1rem 2rem;
 }
 
 h1 {
@@ -28,6 +78,29 @@ h1 {
     color: #666;
     margin-bottom: 2rem;
 }
+
+/* --- Flash messages --- */
+
+.flash {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.flash.error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.flash.success {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+/* --- Calculator sections --- */
 
 .sections {
     display: grid;
@@ -60,6 +133,8 @@ h1 {
     border-bottom-color: #fecaca;
 }
 
+/* --- Forms --- */
+
 label {
     display: block;
     font-size: 0.9rem;
@@ -68,7 +143,10 @@ label {
     margin-bottom: 0.75rem;
 }
 
-input[type="number"] {
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="password"] {
     display: block;
     width: 100%;
     padding: 0.6rem 0.75rem;
@@ -79,7 +157,7 @@ input[type="number"] {
     transition: border-color 0.2s;
 }
 
-input[type="number"]:focus {
+input:focus {
     outline: none;
     border-color: #6366f1;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
@@ -102,6 +180,8 @@ button {
 button:hover {
     background: #4f46e5;
 }
+
+/* --- Results --- */
 
 .result {
     background: #fff;
@@ -143,8 +223,124 @@ button:hover {
     font-weight: 600;
 }
 
+.saved-notice {
+    color: #16a34a;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.login-hint {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.login-hint a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-hint a:hover {
+    text-decoration: underline;
+}
+
+/* --- Auth card --- */
+
+.auth-card {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.auth-footer a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* --- History table --- */
+
+.history-table-wrapper {
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+.history-table {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.history-table thead {
+    background: #f8f9fa;
+}
+
+.history-table th,
+.history-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.history-table th {
+    font-weight: 600;
+    color: #444;
+    border-bottom: 2px solid #eee;
+}
+
+.history-table td {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.history-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+}
+
+.empty-state a {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* --- Responsive --- */
+
 @media (max-width: 600px) {
     .sections {
         grid-template-columns: 1fr;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }
