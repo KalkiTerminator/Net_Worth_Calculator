@@ -1,18 +1,18 @@
-<!--
+{#
   signup.html — Account creation page.
 
   KEY CONCEPTS:
-  - {% extends "base.html" %} inherits the nav bar and layout from base.html.
+  - "extends base.html" inherits the nav bar and layout from base.html.
   - The form POSTs to /signup in main.py, which validates the input, hashes the
     password, and creates the user in the database.
   - "required" attribute means the browser won't submit unless the field is filled.
   - "minlength=6" is client-side validation (the server also checks this).
-  - {{ name or '' }} pre-fills the name field if the form was resubmitted due to
+  - "name or ''" pre-fills the name field if the form was resubmitted due to
     an error (so the user doesn't have to type it again). The "or ''" part
     prevents "None" from showing if the variable doesn't exist.
   - type="password" hides the characters as the user types (shows dots instead).
   - type="email" makes the browser validate that it looks like an email address.
--->
+#}
 
 {% extends "base.html" %}
 
@@ -21,7 +21,7 @@
 {% block content %}
 <div class="auth-card">
     <h1>Create Account</h1>
-    <!-- Form sends data to POST /signup in main.py -->
+    {# Form sends data to POST /signup in main.py #}
     <form action="/signup" method="post">
         <label>
             Name
@@ -35,19 +35,19 @@
         </label>
         <label>
             Password
-            <!-- type="password" hides input; minlength enforces minimum length in browser -->
+            {# type="password" hides input; minlength enforces minimum length in browser #}
             <input type="password" name="password" required placeholder="Create a password"
                    minlength="6">
         </label>
         <label>
             Confirm Password
-            <!-- Server-side code checks that this matches the password field -->
+            {# Server-side code checks that this matches the password field #}
             <input type="password" name="confirm_password" required placeholder="Confirm password"
                    minlength="6">
         </label>
         <button type="submit">Sign Up</button>
     </form>
-    <!-- Link to login page for users who already have an account -->
+    {# Link to login page for users who already have an account #}
     <p class="auth-footer">Already have an account? <a href="/login">Login</a></p>
 </div>
 {% endblock %}

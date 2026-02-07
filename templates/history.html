@@ -1,22 +1,19 @@
-<!--
+{#
   history.html — Shows the user's past net worth calculations.
 
   KEY CONCEPTS:
   - This page is only accessible to logged-in users. The Python route redirects
     to /login if the user isn't authenticated.
-  - {% for calc in calculations %} loops through each Calculation object passed
+  - "for calc in calculations" loops through each Calculation object passed
     from the Python route. It's like a Python for loop but in HTML.
   - calc.created_at.strftime('%b %d, %Y %I:%M %p') formats a datetime object
     into a readable string like "Feb 07, 2026 03:45 PM".
     %b = abbreviated month, %d = day, %Y = 4-digit year,
     %I = 12-hour time, %M = minutes, %p = AM/PM
-  - {% else %} after a for loop runs if the list is empty (no calculations yet).
-    This is a Jinja2 feature — it's different from Python where for/else works
-    differently.
   - The <table> element creates a structured grid of rows and columns.
     <thead> = header row, <tbody> = data rows, <tr> = table row,
     <th> = header cell, <td> = data cell.
--->
+#}
 
 {% extends "base.html" %}
 
@@ -26,12 +23,12 @@
 <h1>Calculation History</h1>
 <p class="subtitle">Your past net worth calculations.</p>
 
-<!-- Only show the table if there are calculations to display -->
+{# Only show the table if there are calculations to display #}
 {% if calculations %}
 <div class="history-table-wrapper">
-    <!-- HTML table to display calculation history -->
+    {# HTML table to display calculation history #}
     <table class="history-table">
-        <!-- Table header row — column names -->
+        {# Table header row — column names #}
         <thead>
             <tr>
                 <th>Date</th>
@@ -40,16 +37,16 @@
                 <th>Net Worth</th>
             </tr>
         </thead>
-        <!-- Table body — one row per calculation -->
+        {# Table body — one row per calculation #}
         <tbody>
-            <!-- Loop through each calculation (newest first, set by Python route) -->
+            {# Loop through each calculation (newest first, set by Python route) #}
             {% for calc in calculations %}
             <tr>
-                <!-- Format the datetime into a human-readable string -->
+                {# Format the datetime into a human-readable string #}
                 <td>{{ calc.created_at.strftime('%b %d, %Y %I:%M %p') }}</td>
                 <td class="positive">${{ "{:,.2f}".format(calc.total_assets) }}</td>
                 <td class="negative">${{ "{:,.2f}".format(calc.total_liabilities) }}</td>
-                <!-- Green if positive net worth, red if negative -->
+                {# Green if positive net worth, red if negative #}
                 <td class="{{ 'positive' if calc.net_worth >= 0 else 'negative' }}">
                     ${{ "{:,.2f}".format(calc.net_worth) }}
                 </td>
@@ -59,7 +56,7 @@
     </table>
 </div>
 {% else %}
-<!-- Shown when the user has no calculations yet -->
+{# Shown when the user has no calculations yet #}
 <div class="empty-state">
     <p>No calculations yet. <a href="/">Calculate your net worth</a> to get started.</p>
 </div>
