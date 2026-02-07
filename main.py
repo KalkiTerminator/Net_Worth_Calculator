@@ -6,8 +6,8 @@ from fastapi import Cookie, Depends, FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import bcrypt as _bcrypt
 from itsdangerous import BadSignature, URLSafeSerializer
-from passlib.hash import bcrypt
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -176,7 +176,7 @@ async def signup(
     user = User(
         name=name,
         email=email,
-        password_hash=bcrypt.hash(password),
+        password_hash=_bcrypt.hashpw(password.encode(), _bcrypt.gensalt()).decode(),
     )
     db.add(user)
     await db.commit()
@@ -202,7 +202,7 @@ async def login(
     result = await db.execute(select(User).where(User.email == email))
     user = result.scalar_one_or_none()
 
-    if not user or not bcrypt.verify(password, user.password_hash):
+    if not user or not _bcrypt.checkpw(password.encode(), user.password_hash.encode()):
         return templates.TemplateResponse(
             "login.html",
             {"request": request, "error": "Invalid email or password.", "email": email},
