@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Worth Calculator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Net Worth Calculator</h1>
+        <p class="subtitle">Enter your assets and liabilities to calculate your net worth.</p>
+
+        <form action="/calculate" method="post">
+            <div class="sections">
+                <div class="section assets-section">
+                    <h2>Assets</h2>
+                    <label>
+                        Cash / Savings
+                        <input type="number" name="cash" step="0.01" min="0"
+                               value="{{ assets['Cash / Savings'] if assets else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Investments
+                        <input type="number" name="investments" step="0.01" min="0"
+                               value="{{ assets['Investments'] if assets else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Property
+                        <input type="number" name="property_value" step="0.01" min="0"
+                               value="{{ assets['Property'] if assets else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Vehicles
+                        <input type="number" name="vehicles" step="0.01" min="0"
+                               value="{{ assets['Vehicles'] if assets else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Other Assets
+                        <input type="number" name="other_assets" step="0.01" min="0"
+                               value="{{ assets['Other Assets'] if assets else '' }}"
+                               placeholder="0.00">
+                    </label>
+                </div>
+
+                <div class="section liabilities-section">
+                    <h2>Liabilities</h2>
+                    <label>
+                        Mortgage
+                        <input type="number" name="mortgage" step="0.01" min="0"
+                               value="{{ liabilities['Mortgage'] if liabilities else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Student Loans
+                        <input type="number" name="student_loans" step="0.01" min="0"
+                               value="{{ liabilities['Student Loans'] if liabilities else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Credit Card Debt
+                        <input type="number" name="credit_card" step="0.01" min="0"
+                               value="{{ liabilities['Credit Card Debt'] if liabilities else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Car Loans
+                        <input type="number" name="car_loans" step="0.01" min="0"
+                               value="{{ liabilities['Car Loans'] if liabilities else '' }}"
+                               placeholder="0.00">
+                    </label>
+                    <label>
+                        Other Liabilities
+                        <input type="number" name="other_liabilities" step="0.01" min="0"
+                               value="{{ liabilities['Other Liabilities'] if liabilities else '' }}"
+                               placeholder="0.00">
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit">Calculate Net Worth</button>
+        </form>
+
+        {% if show_result %}
+        <div class="result">
+            <h2>Your Results</h2>
+            <div class="result-row">
+                <span>Total Assets</span>
+                <span class="positive">${{ "{:,.2f}".format(total_assets) }}</span>
+            </div>
+            <div class="result-row">
+                <span>Total Liabilities</span>
+                <span class="negative">${{ "{:,.2f}".format(total_liabilities) }}</span>
+            </div>
+            <div class="result-row net-worth">
+                <span>Net Worth</span>
+                <span class="{{ 'positive' if net_worth >= 0 else 'negative' }}">
+                    ${{ "{:,.2f}".format(net_worth) }}
+                </span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
