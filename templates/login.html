@@ -1,3 +1,16 @@
+<!--
+  login.html — Login page for existing users.
+
+  KEY CONCEPTS:
+  - Similar to signup.html but with fewer fields (just email + password).
+  - The form POSTs to /login in main.py, which looks up the user by email
+    and verifies the password using bcrypt.
+  - If login fails, the Python route passes an "error" variable which gets
+    displayed by base.html's flash message section.
+  - {{ email or '' }} preserves the email they typed so they don't have to
+    re-enter it after a failed login attempt.
+-->
+
 {% extends "base.html" %}
 
 {% block title %}Login — Net Worth Calculator{% endblock %}
@@ -5,6 +18,7 @@
 {% block content %}
 <div class="auth-card">
     <h1>Login</h1>
+    <!-- Form sends data to POST /login in main.py -->
     <form action="/login" method="post">
         <label>
             Email
@@ -17,6 +31,7 @@
         </label>
         <button type="submit">Login</button>
     </form>
+    <!-- Link to signup page for new users -->
     <p class="auth-footer">Don't have an account? <a href="/signup">Sign Up</a></p>
 </div>
 {% endblock %}

@@ -1,13 +1,35 @@
+<!--
+  index.html — The main calculator page.
+
+  KEY CONCEPTS:
+  - {% extends "base.html" %} means this page inherits the layout from base.html
+    (nav bar, CSS, container). We only need to define our unique content.
+  - <form action="/calculate" method="post"> sends the form data to our
+    POST /calculate route in main.py when the user clicks the button.
+  - Each <input name="cash"> maps to the Form(0) parameter in the Python route.
+    The "name" attribute is how the browser tells the server which field is which.
+  - {{ assets['Cash / Savings'] if assets else '' }} pre-fills the input with
+    the previous value after calculating (so the user doesn't lose their input).
+  - "{:,.2f}".format(number) formats numbers nicely: 1234567.1 → "1,234,567.10"
+-->
+
 {% extends "base.html" %}
 
 {% block content %}
 <h1>Net Worth Calculator</h1>
 <p class="subtitle">Enter your assets and liabilities to calculate your net worth.</p>
 
+<!-- The form sends data to POST /calculate in main.py -->
 <form action="/calculate" method="post">
     <div class="sections">
+        <!-- LEFT COLUMN: Assets (things you own that have value) -->
         <div class="section assets-section">
             <h2>Assets</h2>
+            <!-- Each label + input pair collects one asset value.
+                 type="number" ensures only numbers can be entered.
+                 step="0.01" allows cents (two decimal places).
+                 min="0" prevents negative values.
+                 The "name" attribute must match the Form() parameter in main.py. -->
             <label>
                 Cash / Savings
                 <input type="number" name="cash" step="0.01" min="0"
@@ -40,6 +62,7 @@
             </label>
         </div>
 
+        <!-- RIGHT COLUMN: Liabilities (debts / money you owe) -->
         <div class="section liabilities-section">
             <h2>Liabilities</h2>
             <label>
@@ -75,17 +98,22 @@
         </div>
     </div>
 
+    <!-- Submit button — triggers POST /calculate -->
     <button type="submit">Calculate Net Worth</button>
 </form>
 
+<!-- Results section — only shown after the user clicks Calculate.
+     "show_result" is set to True by the Python route after calculation. -->
 {% if show_result %}
 <div class="result">
     <h2>Your Results</h2>
+    <!-- If the user was logged in, the calculation was saved to the database -->
     {% if saved %}
     <p class="saved-notice">Saved to your history.</p>
     {% endif %}
     <div class="result-row">
         <span>Total Assets</span>
+        <!-- "{:,.2f}" = Python string formatting: comma separators + 2 decimal places -->
         <span class="positive">${{ "{:,.2f}".format(total_assets) }}</span>
     </div>
     <div class="result-row">
@@ -94,6 +122,7 @@
     </div>
     <div class="result-row net-worth">
         <span>Net Worth</span>
+        <!-- Conditional CSS class: green if positive, red if negative -->
         <span class="{{ 'positive' if net_worth >= 0 else 'negative' }}">
             ${{ "{:,.2f}".format(net_worth) }}
         </span>
@@ -101,6 +130,7 @@
 </div>
 {% endif %}
 
+<!-- Prompt to sign up if the user isn't logged in -->
 {% if not user %}
 <p class="login-hint"><a href="/signup">Sign up</a> or <a href="/login">login</a> to save your calculations.</p>
 {% endif %}

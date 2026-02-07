@@ -1,65 +1,99 @@
+/*
+  style.css — All the styling for the app.
+
+  KEY CONCEPTS:
+  - CSS controls how HTML elements look (colors, spacing, layout, etc.).
+  - A "selector" targets HTML elements. Examples:
+      * = all elements
+      .className = elements with class="className"
+      h1 = all <h1> tags
+      input[type="number"] = <input> tags where type is "number"
+  - "rem" is a unit relative to the root font size (usually 16px).
+    1rem = 16px, 0.5rem = 8px. Using rem makes the design scale well.
+  - Colors are in hex format: #6366f1 (indigo/purple), #16a34a (green), #dc2626 (red).
+  - "box-shadow" adds a subtle shadow to make elements look elevated/floating.
+  - "transition" makes changes animate smoothly instead of snapping instantly.
+*/
+
+
+/* === RESET ===
+   Removes default browser spacing and uses border-box sizing.
+   border-box means padding is included INSIDE the element's width,
+   which makes layout math much easier. */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base styles for the whole page */
 body {
+    /* System font stack — uses the OS's native font for a clean, fast look.
+       Falls through the list until it finds one that's available. */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f0f2f5;
-    color: #1a1a2e;
-    min-height: 100vh;
+    background: #f0f2f5;  /* Light gray background */
+    color: #1a1a2e;       /* Dark text color */
+    min-height: 100vh;    /* vh = viewport height. Ensures body fills the screen. */
 }
 
-/* --- Nav bar --- */
+
+/* === NAVIGATION BAR ===
+   The white bar at the top with the app name and login/signup links. */
 
 .navbar {
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);  /* Subtle shadow below the nav */
     padding: 0.75rem 1.5rem;
     margin-bottom: 2rem;
 }
 
+/* Centers the nav content and spreads items to the edges */
 .nav-container {
     max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin: 0 auto;       /* Centers horizontally */
+    display: flex;         /* Flexbox — arranges children in a row */
+    justify-content: space-between;  /* Pushes items to opposite ends */
+    align-items: center;   /* Vertically centers items */
 }
 
+/* The app name / logo link */
 .nav-brand {
-    font-weight: 700;
+    font-weight: 700;     /* Bold */
     font-size: 1.1rem;
-    color: #6366f1;
-    text-decoration: none;
+    color: #6366f1;        /* Indigo/purple — our brand color */
+    text-decoration: none; /* Removes the underline from the link */
 }
 
+/* Container for the right-side nav links */
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1rem;  /* Space between each link */
 }
 
+/* Individual nav links */
 .nav-links a {
     color: #444;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.2s;  /* Smooth color change on hover */
 }
 
 .nav-links a:hover {
-    color: #6366f1;
+    color: #6366f1;  /* Turn purple on hover */
 }
 
+/* The "Hi, username" text shown when logged in */
 .nav-user {
     font-size: 0.9rem;
     color: #6366f1;
     font-weight: 600;
 }
 
-/* --- Container --- */
+
+/* === MAIN CONTAINER ===
+   Centers all page content with a max width for readability. */
 
 .container {
     max-width: 800px;
@@ -79,7 +113,10 @@ h1 {
     margin-bottom: 2rem;
 }
 
-/* --- Flash messages --- */
+
+/* === FLASH MESSAGES ===
+   Colored banners that show errors (red) or success messages (green).
+   Displayed at the top of the page when something goes wrong or right. */
 
 .flash {
     padding: 0.75rem 1rem;
@@ -89,31 +126,34 @@ h1 {
 }
 
 .flash.error {
-    background: #fef2f2;
-    color: #dc2626;
-    border: 1px solid #fecaca;
+    background: #fef2f2;      /* Very light red background */
+    color: #dc2626;            /* Red text */
+    border: 1px solid #fecaca; /* Light red border */
 }
 
 .flash.success {
-    background: #f0fdf4;
-    color: #16a34a;
-    border: 1px solid #bbf7d0;
+    background: #f0fdf4;      /* Very light green background */
+    color: #16a34a;            /* Green text */
+    border: 1px solid #bbf7d0; /* Light green border */
 }
 
-/* --- Calculator sections --- */
+
+/* === CALCULATOR SECTIONS ===
+   The two-column layout for Assets (left) and Liabilities (right). */
 
 .sections {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    display: grid;                     /* CSS Grid — creates a 2D layout */
+    grid-template-columns: 1fr 1fr;   /* Two equal-width columns (1fr = 1 fraction) */
+    gap: 1.5rem;                       /* Space between the two columns */
     margin-bottom: 1.5rem;
 }
 
+/* Each white card (Assets card, Liabilities card) */
 .section {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 12px;   /* Rounded corners */
     padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);  /* Floating card effect */
 }
 
 .section h2 {
@@ -123,65 +163,75 @@ h1 {
     border-bottom: 2px solid #eee;
 }
 
+/* Green header for the Assets section */
 .assets-section h2 {
     color: #16a34a;
     border-bottom-color: #bbf7d0;
 }
 
+/* Red header for the Liabilities section */
 .liabilities-section h2 {
     color: #dc2626;
     border-bottom-color: #fecaca;
 }
 
-/* --- Forms --- */
+
+/* === FORM INPUTS ===
+   Styles for all form fields (number inputs, text, email, password). */
 
 label {
-    display: block;
+    display: block;       /* Each label takes its own line */
     font-size: 0.9rem;
     font-weight: 500;
     color: #444;
     margin-bottom: 0.75rem;
 }
 
+/* Style all input types the same way for consistency */
 input[type="number"],
 input[type="text"],
 input[type="email"],
 input[type="password"] {
     display: block;
-    width: 100%;
+    width: 100%;           /* Full width of parent container */
     padding: 0.6rem 0.75rem;
     margin-top: 0.25rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s;  /* Smooth border color change on focus */
 }
 
+/* When an input is clicked/focused, highlight it with our brand color */
 input:focus {
-    outline: none;
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    outline: none;          /* Remove the default browser outline */
+    border-color: #6366f1;  /* Purple border */
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);  /* Subtle purple glow */
 }
 
+/* The submit button */
 button {
     display: block;
     width: 100%;
     padding: 0.9rem;
-    background: #6366f1;
-    color: #fff;
+    background: #6366f1;    /* Purple background */
+    color: #fff;            /* White text */
     border: none;
     border-radius: 12px;
     font-size: 1.1rem;
     font-weight: 600;
-    cursor: pointer;
+    cursor: pointer;        /* Shows a hand cursor on hover */
     transition: background 0.2s;
 }
 
+/* Darken the button slightly on hover for feedback */
 button:hover {
     background: #4f46e5;
 }
 
-/* --- Results --- */
+
+/* === RESULTS SECTION ===
+   Shows after calculating: total assets, liabilities, and net worth. */
 
 .result {
     background: #fff;
@@ -198,13 +248,15 @@ button:hover {
     border-bottom: 2px solid #eee;
 }
 
+/* Each row shows a label on the left and value on the right */
 .result-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between;  /* Label left, value right */
     padding: 0.6rem 0;
     font-size: 1rem;
 }
 
+/* The final "Net Worth" row is larger and has a top border for emphasis */
 .result-row.net-worth {
     border-top: 2px solid #eee;
     margin-top: 0.5rem;
@@ -213,22 +265,26 @@ button:hover {
     font-weight: 700;
 }
 
+/* Green color for positive values (assets, positive net worth) */
 .positive {
     color: #16a34a;
     font-weight: 600;
 }
 
+/* Red color for negative values (liabilities, negative net worth) */
 .negative {
     color: #dc2626;
     font-weight: 600;
 }
 
+/* Small green text: "Saved to your history." */
 .saved-notice {
     color: #16a34a;
     font-size: 0.85rem;
     margin-bottom: 0.75rem;
 }
 
+/* "Sign up or login to save..." hint for non-logged-in users */
 .login-hint {
     text-align: center;
     margin-top: 1.5rem;
@@ -246,11 +302,13 @@ button:hover {
     text-decoration: underline;
 }
 
-/* --- Auth card --- */
+
+/* === AUTH CARD ===
+   The centered white card used for login and signup forms. */
 
 .auth-card {
     max-width: 400px;
-    margin: 2rem auto;
+    margin: 2rem auto;     /* Centers the card horizontally */
     background: #fff;
     border-radius: 12px;
     padding: 2rem;
@@ -262,6 +320,7 @@ button:hover {
     margin-bottom: 1.5rem;
 }
 
+/* "Already have an account? Login" / "Don't have an account? Sign Up" */
 .auth-footer {
     text-align: center;
     margin-top: 1.5rem;
@@ -279,8 +338,11 @@ button:hover {
     text-decoration: underline;
 }
 
-/* --- History table --- */
 
+/* === HISTORY TABLE ===
+   Displays past calculations in a table format. */
+
+/* Wrapper makes the table horizontally scrollable on small screens */
 .history-table-wrapper {
     overflow-x: auto;
     margin-top: 1rem;
@@ -291,14 +353,16 @@ button:hover {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-collapse: collapse;
-    overflow: hidden;
+    border-collapse: collapse;  /* Removes gaps between table cells */
+    overflow: hidden;           /* Clips content to the rounded corners */
 }
 
+/* Gray background for the header row */
 .history-table thead {
     background: #f8f9fa;
 }
 
+/* Shared styles for header cells and data cells */
 .history-table th,
 .history-table td {
     padding: 0.75rem 1rem;
@@ -316,10 +380,12 @@ button:hover {
     border-bottom: 1px solid #f0f0f0;
 }
 
+/* Highlight table rows on hover for better readability */
 .history-table tbody tr:hover {
     background: #f8f9fa;
 }
 
+/* Shown when the user has no calculations yet */
 .empty-state {
     text-align: center;
     padding: 3rem 1rem;
@@ -332,15 +398,20 @@ button:hover {
     font-weight: 500;
 }
 
-/* --- Responsive --- */
+
+/* === RESPONSIVE DESIGN ===
+   @media queries change the layout on smaller screens.
+   When the screen is 600px wide or less (most phones), the two-column
+   calculator layout stacks into a single column, and the nav bar
+   becomes vertical. */
 
 @media (max-width: 600px) {
     .sections {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr;  /* Stack columns vertically */
     }
 
     .nav-container {
-        flex-direction: column;
+        flex-direction: column;  /* Stack nav items vertically */
         gap: 0.5rem;
     }
 }

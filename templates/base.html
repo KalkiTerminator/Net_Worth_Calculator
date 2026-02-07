@@ -1,21 +1,46 @@
+<!--
+  base.html — The shared layout that ALL other pages inherit from.
+
+  KEY CONCEPTS:
+  - This uses Jinja2 "template inheritance". Think of it like a picture frame —
+    this file is the frame (nav bar, container, CSS link), and each page fills
+    in its own content.
+  - {% block name %}...{% endblock %} defines a "slot" that child templates
+    can override. For example, index.html overrides {% block content %} with
+    the calculator form.
+  - {% if user %} checks if a "user" variable was passed from the Python route.
+    If the user is logged in, we show their name + logout link. Otherwise,
+    we show login + signup links.
+  - {{ variable }} outputs a Python variable's value into the HTML.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Makes the page responsive on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- {% block title %} lets child templates override the page title.
+         If they don't, it defaults to "Net Worth Calculator". -->
     <title>{% block title %}Net Worth Calculator{% endblock %}</title>
+    <!-- Link to our CSS file served from the /static folder -->
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <!-- Navigation bar — shown on every page -->
     <nav class="navbar">
         <div class="nav-container">
+            <!-- Clicking the app name takes you to the homepage -->
             <a href="/" class="nav-brand">Net Worth Calculator</a>
             <div class="nav-links">
+                <!-- Jinja2 if/else: show different links based on login status -->
                 {% if user %}
+                    <!-- User is logged in — show their name, history link, and logout -->
                     <span class="nav-user">Hi, {{ user.name }}</span>
                     <a href="/history">History</a>
                     <a href="/logout">Logout</a>
                 {% else %}
+                    <!-- Not logged in — show login and signup links -->
                     <a href="/login">Login</a>
                     <a href="/signup">Sign Up</a>
                 {% endif %}
@@ -24,6 +49,8 @@
     </nav>
 
     <div class="container">
+        <!-- Flash messages: shown when there's an error or success message
+             passed from the Python route (e.g., "Passwords do not match") -->
         {% if error %}
         <div class="flash error">{{ error }}</div>
         {% endif %}
@@ -31,6 +58,8 @@
         <div class="flash success">{{ success }}</div>
         {% endif %}
 
+        <!-- This is where each page's unique content goes.
+             Child templates override this block with their own HTML. -->
         {% block content %}{% endblock %}
     </div>
 </body>
